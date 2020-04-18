@@ -6,6 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property mixed projects
+ * @property mixed favoriteProjects
+ * @method static inRandomOrder()
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +41,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function importantTasks()
+    {
+        $priorities = Priority::whereIn('slug', ['high', 'immediate'])->get(['id'])->map(function ($priority) {
+            return $priority['id'];
+        })->toArray();
+        return $this->hasMany(Task::class)->whereIn('priority_id', $priorities);
+    }
+
+    /**
+     * @return self
+     */
+    public static function current()
+    {
+        return self::find(1);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)->withPivot('is_favorite')->withTimestamps();
+    }
+
+    public function favoriteProjects()
+    {
+        return $this->belongsToMany(Project::class)->wherePivot('is_favorite', true);
+    }
 }

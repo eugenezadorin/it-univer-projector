@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePrioritiesTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePrioritiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('priorities', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('sort')->default(500);
             $table->boolean('active')->default(true);
+            $table->unsignedInteger('sort')->default(500);
             $table->string('name', 255);
+            $table->string('slug', 20);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreatePrioritiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('priorities');
+        Schema::dropIfExists('tags');
     }
 }

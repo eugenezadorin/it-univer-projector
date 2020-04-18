@@ -1,9 +1,7 @@
 <?php
 
-use App\Project;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,39 +14,16 @@ use Illuminate\Support\Str;
 |
 */
 
-Route::get('/', function () {
-    $projects = Project::all();
-    $tasks = \App\Task::where("is_important", true)->all();
+Route::get('/', 'MainPageController');
 
-    return view('pages.main', [
-        'fav_projects' => $projects,
-        'tasks' => $tasks,
-    ]);
-});
+Route::get('/projects', 'ProjectController@index')->name('projects');
+Route::get('/projects/{slug}', 'ProjectController@show')->name('projects.show');
+Route::get('/projects/create', 'ProjectController@create')->name('projects.create');
+Route::post('/projects', 'ProjectController@store')->name('projects.store');
 
-Route::get('/project', function () {
-    return view('pages.project');
-});
-
-Route::get('/task', function () {
-    return view('pages.task');
-});
-
-Route::get('/create-project/{project_name}', function ($name){
-
-    $project = new Project();
-    $project->name = $name;
-    $project->slug = Str::slug($name);
-    $project->description = "Lorem ipsum dolor sit amet";
-    $project->save();
-
-});
-
-Route::get('/get-project/{project_name}', function ($name){
-    $project = Project::where("name", $name)->firstOrFail();
-
-    dd($project->name);
-});
+Route::get('/projects/{project}/tasks', 'TaskController@index');
+Route::get('/projects/{project}/tasks/{task}', 'TaskController@show');
+Route::post('/projects/{project}/tasks/{task}/comments', 'TaskController@comment');
 
 
 

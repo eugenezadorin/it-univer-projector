@@ -3,6 +3,6 @@
         Tasks
     </h2>
     <div class="panel-block">
-        @include('components.task-list-full')
+        @include('components.task-list-full', ['tasks' => $tasks])
     </div>
 </div>

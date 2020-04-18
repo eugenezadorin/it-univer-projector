@@ -9,33 +9,19 @@
         <a class="tag is-danger">#bug</a>
         <a class="tag is-success">#feature</a>
 
-        <h1 class="title is-2">Create main page layout prototype</h1>
+        <h1 class="title is-2">{{ $task->name }}</h1>
 
         <div class="app__task-summary">
             <div class="app__task-summary-item">
-                <strong>Assignee:</strong> Eugene Zadorin
+                <strong>Assignee:</strong> {{ $task->assignee->name }}
             </div>
             <div class="app__task-summary-item">
-                <strong>Priority:</strong> High
+                <strong>Priority:</strong> {{ $task->priority->name }}
             </div>
         </div>
 
         <div class="content">
-            <p>Some task description.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            {{ $task->description }}
         </div>
 
         <article class="message is-info">

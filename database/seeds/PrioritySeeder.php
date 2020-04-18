@@ -13,10 +13,10 @@ class PrioritySeeder extends Seeder
     public function run()
     {
         DB::table('priorities')->insert([
-            ['name' => 'Low', 'sort' => 100],
-            ['name' => 'Normal', 'sort' => 200],
-            ['name' => 'High', 'sort' => 300],
-            ['name' => 'Immediate', 'sort' => 500],
+            ['sort' => 100, 'name' => 'Low', 'slug' => 'low', 'created_at' => now()],
+            ['sort' => 200, 'name' => 'Normal', 'slug' => 'normal', 'created_at' => now()],
+            ['sort' => 300, 'name' => 'High', 'slug' => 'high', 'created_at' => now()],
+            ['sort' => 400, 'name' => 'Immediate', 'slug' => 'immediate', 'created_at' => now()],
         ]);
     }
 }

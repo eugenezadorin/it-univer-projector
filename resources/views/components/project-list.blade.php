@@ -3,20 +3,20 @@
         @foreach($projects as $project)
         <tr>
             <td>
-                <a href="/projects/{{ $project->slug }}" class="app__project-list-name">{{ $project->name }}</a>
+                <a href="{{ $project->path() }}" class="app__project-list-name">{{ $project->name }}</a>
                 <div class="app__project-list-description">{{ $project->description }}</div>
             </td>
             <td>
-                <span class="icon app__project-list-icon" title="3 tasks">
+                <span class="icon app__project-list-icon" title="{{ $project->tasks()->count() }} tasks">
                     <i class="fas fa-tasks"></i>
-                    <span class="app__project-list-counter">3</span>
+                    <span class="app__project-list-counter">{{ $project->tasks()->count() }}</span>
                 </span>
-                <span class="icon app__project-list-icon" title="2 members">
+                <span class="icon app__project-list-icon" title="{{ $project->members()->count() }} members">
                     <i class="fas fa-user"></i>
-                    <span class="app__project-list-counter">2</span>
+                    <span class="app__project-list-counter">{{ $project->members()->count() }}</span>
                 </span>
             </td>
-            <td class="has-text-right">{{ date("H:i", strtotime($project->updated_at)) }}</td>
+            <td class="has-text-right">{{ $project->updated_at->format('H:i') }}</td>
         </tr>
         @endforeach
     </tbody>

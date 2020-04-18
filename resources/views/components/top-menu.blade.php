@@ -2,7 +2,7 @@
     <div class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="/">Home</a>
-            <a class="navbar-item" href="/projects">Projects</a>
+            <a class="navbar-item" href="{{ route('projects') }}">Projects</a>
             <a class="navbar-item" href="/activity">Activity</a>
             <a class="navbar-item" href="/settings">Settings</a>
         </div>

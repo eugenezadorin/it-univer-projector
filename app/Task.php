@@ -6,25 +6,43 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    public function comments()
-    {
-        $this->hasMany(Comment::class);
-    }
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'updated_at' => 'datetime',
+        'created_at' => 'datetime',
+    ];
 
-    public function assignee()
+    public function path()
     {
-        $this->belongsTo(User::class);
-    }
-
-    public function priority()
-    {
-        $this->hasOne(Priority::class);
+        return sprintf('/projects/%s/tasks/%s', $this->project->slug, $this->id);
     }
 
     public function project()
     {
-        $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class);
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
+    }
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, "user_id");
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
-
-//$task->comments()

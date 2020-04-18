@@ -6,10 +6,10 @@
     <div class="container">
         <div class="columns">
             <div class="column">
-                @include('widgets.favorite-projects', ['projects' => $fav_projects])
+                @include('widgets.favorite-projects', ['projects' => $projects])
             </div>
             <div class="column">
-                @include('widgets.important-tasks')
+                @include('widgets.important-tasks', ['tasks' => $tasks])
             </div>
         </div>
     </div>
