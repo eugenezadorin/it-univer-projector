@@ -7,13 +7,13 @@
                 <div class="app__project-list-description">{{ $project->description }}</div>
             </td>
             <td>
-                <span class="icon app__project-list-icon" title="{{ $project->tasks()->count() }} tasks">
+                <span class="icon app__project-list-icon" title="{{ $project->tasks_count }} tasks">
                     <i class="fas fa-tasks"></i>
-                    <span class="app__project-list-counter">{{ $project->tasks()->count() }}</span>
+                    <span class="app__project-list-counter">{{ $project->tasks_count }}</span>
                 </span>
-                <span class="icon app__project-list-icon" title="{{ $project->members()->count() }} members">
+                <span class="icon app__project-list-icon" title="{{ $project->members_count }} members">
                     <i class="fas fa-user"></i>
-                    <span class="app__project-list-counter">{{ $project->members()->count() }}</span>
+                    <span class="app__project-list-counter">{{ $project->members_count }}</span>
                 </span>
             </td>
             <td class="has-text-right">{{ $project->updated_at->format('H:i') }}</td>

@@ -12,7 +12,7 @@
                 <a href="{{ $task->path() }}">{{ $task->name }}</a>
             </td>
             <td class="has-text-right">
-                <div class="app__task-list-comments">{{ $task->comments()->count() }} comments</div>
+                <div class="app__task-list-comments">{{ $task->comments_count }} comments</div>
                 {{ $task->updated_at->format('H:i') }}
             </td>
         </tr>

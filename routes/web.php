@@ -21,9 +21,10 @@ Route::get('/projects/{slug}', 'ProjectController@show')->name('projects.show');
 Route::get('/projects/create', 'ProjectController@create')->name('projects.create');
 Route::post('/projects', 'ProjectController@store')->name('projects.store');
 
-Route::get('/projects/{project}/tasks', 'TaskController@index');
-Route::get('/projects/{project}/tasks/{task}', 'TaskController@show');
-Route::post('/projects/{project}/tasks/{task}/comments', 'TaskController@comment');
+Route::get('/projects/{project}/tasks', 'TaskController@index')->name('tasks');
+Route::get('/projects/{project}/tasks/{task}', 'TaskController@show')->name('tasks.show');
+Route::get('/projects/{project}/tasks/{task}/comments', 'TaskController@comments')->name('tasks.comments');
+Route::post('/projects/{project}/tasks/{task}/comments', 'TaskController@comment')->name('tasks.comment');
 
 
 

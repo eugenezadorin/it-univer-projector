@@ -11,15 +11,28 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     // /projects/{project}/tasks
+    // @todo постраничка
     public function index(Project $project)
     {
-        dd($project);
+        return view('pages.project-tasks', ['project' => $project]);
     }
 
     // /projects/{project}/tasks/{task}
+    // @todo проверка доступа к текущему юзеру
     public function show(Project $project, Task $task)
     {
         return view('pages.task', ['task' => $task]);
+    }
+
+    public function comments(Project $project, Task $task)
+    {
+        return $task->comments()->with('author')->get()->map(function($comment){
+            return [
+                'author' => $comment->author->name,
+                'date' => $comment->created_at->format('d.m.Y H:i'),
+                'text' => nl2br($comment->text)
+            ];
+        });
     }
 
     public function comment(Project $project, Task $task, Request $request)
@@ -35,6 +48,6 @@ class TaskController extends Controller
 
         $comment->save();
 
-        return redirect($task->path());
+        return redirect($task->path())->with('message', 'Task updated');
     }
 }

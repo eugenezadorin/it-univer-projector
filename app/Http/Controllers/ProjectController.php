@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Priority;
+use App\Project;
+use App\Task;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -21,17 +25,16 @@ class ProjectController extends Controller
 
     public function store()
     {
-        $project = new \App\Project();
+        $project = new Project();
         $project->name = "Test proj";
-        $project->slug = \Illuminate\Support\Str::slug($project->name);
+        $project->slug = Str::slug($project->name);
         $project->save();
 
-        $task = new \App\Task();
+        $task = new Task();
         $task->name = "Create something";
         $task->description = "It is going to be cool";
-        $task->assignee()->associate(\App\User::current());
-        $task->priority()->associate(\App\Priority::find(1));
-
+        $task->assignee()->associate(User::current());
+        $task->priority()->associate(Priority::find(1));
 
         $project->tasks()->save($task);
     }

@@ -1,83 +1,110 @@
-@extends('layout')
-@section('title', 'Single task')
+@extends('layout', ['project' => $task->project])
+@section('title', $task->name . ' - ' . $task->project->name)
 
 @section('content')
-<section class="section">
-    <div class="container">
+    <section class="section">
+        <div class="container">
 
-        <a class="tag is-info">#Projector</a>
-        <a class="tag is-danger">#bug</a>
-        <a class="tag is-success">#feature</a>
+            @if (session('message'))
+                <div class="notification is-success">
+                    <button class="delete"></button>
+                    {{ session('message') }}
+                </div>
+            @endif
 
-        <h1 class="title is-2">{{ $task->name }}</h1>
+            @if ($errors->any())
+                <div class="notification is-danger">
+                    <button class="delete"></button>
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>
+                    @endforeach
+                </div>
+            @endif
 
-        <div class="app__task-summary">
-            <div class="app__task-summary-item">
-                <strong>Assignee:</strong> {{ $task->assignee->name }}
+            <a href="{{ $task->project->path() }}" class="tag is-info">#{{ $task->project->name }}</a>
+            @foreach($task->tags as $tag)
+                <a href="{{ $tag->path() }}" class="tag tag--{{ $tag->slug }}">#{{ $tag->name }}</a>
+            @endforeach
+
+            <h1 class="title is-2">{{ $task->name }}</h1>
+
+            <div class="app__task-summary">
+                <div class="app__task-summary-item">
+                    <strong>Assignee:</strong> {{ $task->assignee->name }}
+                </div>
+                <div class="app__task-summary-item">
+                    <strong>Priority:</strong> {{ $task->priority->name }}
+                </div>
             </div>
-            <div class="app__task-summary-item">
-                <strong>Priority:</strong> {{ $task->priority->name }}
+
+            <div class="content">
+                {{ $task->description }}
             </div>
+
+
+
+            @foreach($task->comments as $comment)
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>{{ $comment->author->name }}</p>
+                    <time>{{ $comment->created_at->format('d.m.Y H:i') }}</time>
+                </div>
+                <div class="message-body">
+                    {!! nl2br($comment->text) !!}
+                </div>
+            </article>
+            @endforeach
+
+                <CommentsList>
+                    <Comment author="" text="" date=""></Comment>
+                    <Comment author="" text="" date=""></Comment>
+                    <Comment author="" text="" date=""></Comment>
+                    <CommentsForm></CommentsForm>
+                </CommentsList>
+
+
+            <div id="comments-list-app">
+                <article class="message is-warning" v-for="comment in comments">
+                    <div class="message-header">
+                        <p>@{{ comment.author }}</p>
+                        <time>@{{ comment.date }}</time>
+                    </div>
+                    <div class="message-body" v-html="comment.text"></div>
+                </article>
+            </div>
+            <br><br>
+
+            {{--
+            <div id="comments-list-component">
+                <comments-list load-url="{{ route('tasks.comments', ['project' => $task->project, 'task' => $task]) }}"></comments-list>
+            </div>
+            <br><br>
+            --}}
+
+            <form method="post" data-action="{{ $task->path() }}" action="{{ route('tasks.comment', ['project' => $task->project, 'task' => $task]) }}">
+                @csrf
+                <div class="field">
+                    <label class="label">Message</label>
+                    <div class="control">
+                        <textarea class="textarea" name="message" placeholder="Type your comments here">{{ old('message') }}</textarea>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link">Submit</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-light">Cancel</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
-
-        <div class="content">
-            {{ $task->description }}
-        </div>
-
-        <article class="message is-info">
-            <div class="message-header">
-                <p>Eugene Zadorin</p>
-                <time>08.04.2020 23:15</time>
-            </div>
-            <div class="message-body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
-            </div>
-        </article>
-
-        <article class="message is-info">
-            <div class="message-header">
-                <p>Ivan Ivanov</p>
-                <time>08.04.2020 23:20</time>
-            </div>
-            <div class="message-body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit?
-            </div>
-        </article>
-
-        <article class="message is-info">
-            <div class="message-header">
-                <p>Eugene Zadorin</p>
-                <time>08.04.2020 23:25</time>
-            </div>
-            <div class="message-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.</p>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-        </article>
-
-        <form>
-            <div class="field">
-                <label class="label">Message</label>
-                <div class="control">
-                    <textarea class="textarea" placeholder="Type your comments here"></textarea>
-                </div>
-            </div>
-            <div class="field is-grouped">
-                <div class="control">
-                    <button class="button is-link">Submit</button>
-                </div>
-                <div class="control">
-                    <button class="button is-link is-light">Cancel</button>
-                </div>
-            </div>
-        </form>
-
-    </div>
-</section>
+    </section>
 @endsection
+<script>
+    import CommentsList from "../../js/components/CommentsList";
+    export default {
+        components: {CommentsList}
+    }
+</script>

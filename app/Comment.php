@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    protected $casts = [
+        'updated_at' => 'datetime',
+        'created_at' => 'datetime',
+    ];
+
     public function task()
     {
         return $this->belongsTo(Task::class);

@@ -18,11 +18,22 @@ class MainPageController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $projects = User::current()->favoriteProjects;
-        $priorities = Priority::whereIn('slug', ['high', 'immediate'])->get(['id'])->map(function ($priority) {
+        $user = User::current();
+
+        $projects = $user->projects()->wherePivot('is_favorite', true);
+
+        $projects = $user->favoriteProjects()->withCount(['tasks', 'members'])->get(); // $project->tasks_count
+
+        $priorities = Priority::whereIn('slug', ['high', 'immediate', 'normal', 'low'])->get(['id'])->map(function ($priority) {
             return $priority['id'];
         })->toArray();
-        $tasks = User::current()->tasks()->whereIn('priority_id', $priorities)->get();
+
+        $tasks = $user->tasks()
+            ->whereIn('priority_id', $priorities)
+            ->with(['project', 'tags'])
+            ->withCount('comments')
+            ->get(); // $task->comments_count
+
         return view('pages.main', [
             'projects' => $projects,
             'tasks' => $tasks,

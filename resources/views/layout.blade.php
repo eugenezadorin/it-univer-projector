@@ -20,12 +20,17 @@
     </div>
     <div class="columns is-marginless is-fullheight-layout">
         <div class="column is-one-fifth app__sidebar">
-            @include('components.left-menu')
+            @isset($project)
+                @include('components.project-menu', ['project' => $project])
+            @else
+                @include('components.left-menu')
+            @endisset
         </div>
         <div class="column app__content">
             @section('content')
             @show
         </div>
     </div>
+    <script type="text/javascript" src="{{ asset('/js/app.js') }}"></script>
   </body>
 </html>

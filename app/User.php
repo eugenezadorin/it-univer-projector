@@ -47,6 +47,7 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
+    // Domain Driven Development
     public function importantTasks()
     {
         $priorities = Priority::whereIn('slug', ['high', 'immediate'])->get(['id'])->map(function ($priority) {

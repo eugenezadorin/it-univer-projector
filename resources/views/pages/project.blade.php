@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Single project')
+@section('title', $project->name)
 
 @section('content')
 <section class="section">

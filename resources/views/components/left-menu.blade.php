@@ -1,13 +1,6 @@
 <aside class="menu">
-    <p class="menu-label">
-        Project name
-    </p>
+    <p class="menu-label">Actions</p>
     <ul class="menu-list">
-        <li><a>Info</a></li>
-        <li><a>Tasks</a></li>
-        <li><a>Wiki</a></li>
-        <li><a>Customer</a></li>
-        <li><a>Members</a></li>
-        <li><a>Activity</a></li>
+        <li><a href="{{ route('projects.create') }}">Create new project</a></li>
     </ul>
 </aside>
