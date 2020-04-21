@@ -1,34 +1,40 @@
 <template>
     <div class="comments-list">
-        <article class="message is-success" v-for="comment in comments">
-            <div class="message-header">
-                <p>{{ comment.author }}</p>
-                <time>{{ comment.date }}</time>
-            </div>
-            <div class="message-body" v-html="comment.text"></div>
-        </article>
+        <Loading v-if="loading"></Loading>
+        <Comment :comment="comment" :key="comment.id" v-for="comment in comments"></Comment>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import Comment from "./Comment";
+    import Loading from "./Loading";
 
     export default {
         name: 'CommentsList',
         props: ['load-url'],
+        components: {
+            Comment,
+            Loading
+        },
         data() {
             return {
-                comments: []
+                comments: [],
+                loading: true
             }
         },
-        created: function () {
-            axios.get(this.loadUrl)
-                .then(response => {
-                    this.comments = response.data;
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+        created() {
+            setTimeout(() => {
+                axios.get(this.loadUrl)
+                    .then(response => {
+                        this.comments = response.data;
+                        this.loading = false;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.loading = false;
+                    });
+            }, 3000);
         }
     }
 </script>

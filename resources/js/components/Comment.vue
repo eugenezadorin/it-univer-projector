@@ -1,17 +1,17 @@
 <template>
-    <article class="message is-danger">
+    <article class="message is-info">
         <div class="message-header">
-            <p>{{ author }}</p>
-            <time>{{ date }}</time>
+            <p>{{ comment.author }}</p>
+            <time>{{ comment.date }}</time>
         </div>
-        <div class="message-body" v-html="text"></div>
+        <div class="message-body" v-html="comment.text"></div>
     </article>
 </template>
 
 <script>
     export default {
         name: "Comment",
-        props: ["author", "date", "text"]
+        props: ["comment"]
     }
 </script>
 

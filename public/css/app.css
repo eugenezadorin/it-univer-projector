@@ -12106,3 +12106,22 @@ label.panel-block:hover {
   margin-right: 2rem;
 }
 
+.app__task-comments {
+  padding-bottom: 1.5rem;
+}
+
+.tag.tag--bug {
+  background-color: #f14668;
+  color: white;
+}
+
+.tag.tag--feature {
+  background-color: #48c774;
+  color: white;
+}
+
+.tag.tag--documentation {
+  background-color: #ffdd57;
+  color: white;
+}
+

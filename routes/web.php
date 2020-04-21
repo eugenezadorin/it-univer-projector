@@ -23,9 +23,7 @@ Route::post('/projects', 'ProjectController@store')->name('projects.store');
 
 Route::get('/projects/{project}/tasks', 'TaskController@index')->name('tasks');
 Route::get('/projects/{project}/tasks/{task}', 'TaskController@show')->name('tasks.show');
-Route::get('/projects/{project}/tasks/{task}/comments', 'TaskController@comments')->name('tasks.comments');
-Route::post('/projects/{project}/tasks/{task}/comments', 'TaskController@comment')->name('tasks.comment');
 
-
-
-
+Route::get('/projects/{project}/tasks/{task}/comments', 'CommentsController@index')->name('comments.index');
+Route::post('/projects/{project}/tasks/{task}/comments', 'CommentsController@create')->name('comments.create');
+Route::delete('/comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');

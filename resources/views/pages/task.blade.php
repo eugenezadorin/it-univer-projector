@@ -37,51 +37,17 @@
                 </div>
             </div>
 
-            <div class="content">
+            <div class="content app__task-description">
                 {{ $task->description }}
             </div>
 
-
-
-            @foreach($task->comments as $comment)
-            <article class="message is-info">
-                <div class="message-header">
-                    <p>{{ $comment->author->name }}</p>
-                    <time>{{ $comment->created_at->format('d.m.Y H:i') }}</time>
-                </div>
-                <div class="message-body">
-                    {!! nl2br($comment->text) !!}
-                </div>
-            </article>
-            @endforeach
-
-                <CommentsList>
-                    <Comment author="" text="" date=""></Comment>
-                    <Comment author="" text="" date=""></Comment>
-                    <Comment author="" text="" date=""></Comment>
-                    <CommentsForm></CommentsForm>
-                </CommentsList>
-
-
-            <div id="comments-list-app">
-                <article class="message is-warning" v-for="comment in comments">
-                    <div class="message-header">
-                        <p>@{{ comment.author }}</p>
-                        <time>@{{ comment.date }}</time>
-                    </div>
-                    <div class="message-body" v-html="comment.text"></div>
-                </article>
+            <div class="js-comments-list app__task-comments">
+                <comments-list
+                    load-url="{{ route('comments.index', ['project' => $task->project, 'task' => $task]) }}">
+                </comments-list>
             </div>
-            <br><br>
 
-            {{--
-            <div id="comments-list-component">
-                <comments-list load-url="{{ route('tasks.comments', ['project' => $task->project, 'task' => $task]) }}"></comments-list>
-            </div>
-            <br><br>
-            --}}
-
-            <form method="post" data-action="{{ $task->path() }}" action="{{ route('tasks.comment', ['project' => $task->project, 'task' => $task]) }}">
+            <form method="post" action="{{ route('comments.create', ['project' => $task->project, 'task' => $task]) }}">
                 @csrf
                 <div class="field">
                     <label class="label">Message</label>
@@ -102,9 +68,3 @@
         </div>
     </section>
 @endsection
-<script>
-    import CommentsList from "../../js/components/CommentsList";
-    export default {
-        components: {CommentsList}
-    }
-</script>
