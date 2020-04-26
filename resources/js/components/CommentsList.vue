@@ -49,7 +49,7 @@
             }
         },
         created() {
-            setTimeout(this.loadComments, 10000);
+            setTimeout(this.loadComments, 3000);
         }
     }
 </script>

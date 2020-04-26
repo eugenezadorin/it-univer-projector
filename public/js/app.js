@@ -2103,7 +2103,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    setTimeout(this.loadComments, 10000);
+    setTimeout(this.loadComments, 3000);
   }
 });
 
@@ -44104,7 +44104,7 @@ document.querySelectorAll('.notification .delete').forEach(function (item) {
     var notification = button.closest('.notification');
     notification.classList.add('is-hidden');
   });
-}); // behavior
+});
 
 /***/ }),
 
@@ -44126,8 +44126,8 @@ document.querySelectorAll('.notification .delete').forEach(function (item) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\IT_Univer\projector-proto\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\IT_Univer\projector-proto\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! d:\IT_Univer\tmp\it-univer-projector\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! d:\IT_Univer\tmp\it-univer-projector\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
