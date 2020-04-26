@@ -1,7 +1,13 @@
 <template>
     <div class="comments-list">
         <Loading v-if="loading"></Loading>
-        <Comment :comment="comment" :key="comment.id" v-for="comment in comments"></Comment>
+        <Comment
+            :comment="comment"
+            :key="comment.id"
+            v-for="(comment, index) in comments"
+            @comment-deleted="onCommentDelete(index)">
+        </Comment>
+        <CommentForm :action="postUrl" @comment-saved="loadComments"></CommentForm>
     </div>
 </template>
 
@@ -9,22 +15,25 @@
     import axios from 'axios';
     import Comment from "./Comment";
     import Loading from "./Loading";
+    import CommentForm from "./CommentForm";
 
     export default {
         name: 'CommentsList',
-        props: ['load-url'],
+        props: ['load-url', 'post-url'],
         components: {
             Comment,
-            Loading
+            Loading,
+            CommentForm
         },
         data() {
             return {
                 comments: [],
-                loading: true
+                loading: true,
             }
         },
-        created() {
-            setTimeout(() => {
+        methods: {
+            loadComments() {
+                this.loading = true;
                 axios.get(this.loadUrl)
                     .then(response => {
                         this.comments = response.data;
@@ -34,7 +43,13 @@
                         console.log(err);
                         this.loading = false;
                     });
-            }, 3000);
+            },
+            onCommentDelete(index) {
+                this.comments.splice(index, 1);
+            }
+        },
+        created() {
+            setTimeout(this.loadComments, 10000);
         }
     }
 </script>

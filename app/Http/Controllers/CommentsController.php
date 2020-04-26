@@ -36,6 +36,10 @@ class CommentsController extends Controller
 
         $comment->save();
 
+        if ($request->ajax()) {
+            return ['success' => true, 'message' => 'Task updated'];
+        }
+
         return redirect($task->path())->with('message', 'Task updated');
     }
 

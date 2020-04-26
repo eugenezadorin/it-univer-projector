@@ -43,27 +43,10 @@
 
             <div class="js-comments-list app__task-comments">
                 <comments-list
-                    load-url="{{ route('comments.index', ['project' => $task->project, 'task' => $task]) }}">
+                    load-url="{{ route('comments.index', ['project' => $task->project, 'task' => $task]) }}"
+                    post-url="{{ route('comments.create', ['project' => $task->project, 'task' => $task]) }}">
                 </comments-list>
             </div>
-
-            <form method="post" action="{{ route('comments.create', ['project' => $task->project, 'task' => $task]) }}">
-                @csrf
-                <div class="field">
-                    <label class="label">Message</label>
-                    <div class="control">
-                        <textarea class="textarea" name="message" placeholder="Type your comments here">{{ old('message') }}</textarea>
-                    </div>
-                </div>
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="button is-link">Submit</button>
-                    </div>
-                    <div class="control">
-                        <button class="button is-link is-light">Cancel</button>
-                    </div>
-                </div>
-            </form>
 
         </div>
     </section>
